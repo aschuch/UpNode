@@ -2,9 +2,12 @@
 // UpNode 
 //
 // v0.0.1
-// Author: Alexander Schuch <hello@schuch.me>
+// Author: Alexander Schuch 
 //
-
+// http://github.com/aschuch
+// http://schuch.me
+// hello@schuch.me
+//
 var http = require('http')
   , url = require('url')
   , path = require('path')
@@ -12,9 +15,10 @@ var http = require('http')
   , mime = require('mime')
   , Formidable = require('formidable');
 
-// options
+// Configuration options
 var uploadsPath = __dirname + '/uploads/'
-  , port = process.argv[2] || 8888;
+  , port = process.argv[2] || 8888
+  , mimeTypeWhitelist = ["image/png"]; 
 
 // server setup
 http.createServer(function(req, res) {
@@ -102,7 +106,8 @@ http.createServer(function(req, res) {
       var form = new Formidable.IncomingForm()
         , progress = null
         , bytesAlreadyReceived = 0
-        , files = [];
+        , files = []
+        , fields = {};
 
       form
          // progress
@@ -114,8 +119,16 @@ http.createServer(function(req, res) {
          // incoming file
          .on('file', function(field, file) {
 
-            // TODO: Check file for allowed/whitelisted files
-            // whitelist.forEach -> mime == whitelisted break
+            // Check file for allowed/whitelisted files
+            var mimeType = mime.lookup(file.filename);
+            if (typeof(mimeTypeWhitelist) !== 'undefined' && mimeTypeWhitelist.length > 0) {
+               // actually use the whitelist
+               if(mimeTypeWhitelist.indexOf(mimeType) == -1) {
+                  // error, the file's mime is not white listed
+                  console.log("\nIgnoring uploaded file '" + file.name + "' of type '" + mimeType + "', the file's mime type is not white listed.");
+                  return;
+               }
+            }
 
             // add file to files list
             var fileInfo = {};
@@ -124,13 +137,18 @@ http.createServer(function(req, res) {
             fileInfo.filename = file.filename;
             fileInfo.size = file.size;
             fileInfo.lastModifiedDate = file.lastModifiedDate;
-            fileInfo.mimeType = mime.lookup(file.filename);
+            fileInfo.mimeType = mimeType;
 
             files.push(fileInfo);
 
             //rename the incoming file
             fs.renameSync(file.path, fileInfo.path);
          })
+
+         // fields, other query params
+         .on('field', function(name, value) {
+            fields.name = value;
+         }) 
 
          // error
          .on('error', function(err) {
@@ -140,6 +158,8 @@ http.createServer(function(req, res) {
 
          // end of request
          .on('end', function() {
+            //json.params = params;
+            json.fields = fields;
             json.files = files;
             json.numberOfFiles = files.length;
             res.end(JSON.stringify(json));
