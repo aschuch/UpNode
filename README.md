@@ -21,10 +21,9 @@ $ node server.js [port]
 File server running at
   => http://localhost:8888/
 CTRL + C to shutdown
-
 ```
 
-### `POST` Uploading files
+### Uploading files
 
 A `POST` request uploads any given files and displays a summary of the file's properties in JSON format.
 
@@ -45,7 +44,6 @@ $ curl -F 'upload=@img.png' http://localhost:8888
     }
   ]
 }
-
 ```
 
 You may upload multiple files by providing additional files within the request.
@@ -55,7 +53,9 @@ $ curl -F 'upload[]=@img.png' -F 'upload[]=@anotherimg.png' http://localhost:888
 ```
 
 
-### `GET` Serving files
+### Serving files
+
+A `GET` request will serve previously uploaded files.
 
 You can access any uploaded files by pointing your browser to the uploaded file's path.
 
