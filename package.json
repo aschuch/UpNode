@@ -1,0 +1,23 @@
+{
+  "name": "UpNode",
+  "version": "0.0.1",
+  "author": "Alexander Schuch <hello@schuch.me>",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nodejitsu/http-server.git"
+  },
+  "keywords": [
+    "rest",
+    "http",
+    "server",
+    "upload"
+  ],
+  "dependencies" : {
+    "formidable"    : "*",
+    "mime"          : "*"
+  },
+  "engines": {
+    "node": ">=0.8"
+  }
+}
