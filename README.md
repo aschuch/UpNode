@@ -29,7 +29,9 @@ A `POST` request uploads any given files and displays a summary of the file's pr
 
 ```
 $ curl -F 'upload=@img.png' http://localhost:8888
+```
 
+```json
 {
   "errors": false,
   "numberOfFiles": 1,
@@ -68,7 +70,7 @@ In most cases, you might not want the server to accept every file that is upload
 
 To restrict the type of files that can be uploaded, edit the `mimeTypeWhitelist` array in `server.js`.
 
-```
+```javascript
 // only allow jpg and png images to be uploaded 
 mimeTypeWhitelist = ["image/jpeg", "image/png"];
 ```
