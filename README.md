@@ -52,7 +52,6 @@ You may upload multiple files by providing additional files within the request.
 $ curl -F 'upload[]=@img.png' -F 'upload[]=@anotherimg.png' http://localhost:8888
 ```
 
-
 ### Serving files
 
 A `GET` request will serve previously uploaded files.
@@ -63,17 +62,18 @@ E.g. if you uploaded `img.png`, your file will be located at `http://localhost:8
 
 ## Configuration options
 
-### Whitelisting MIME-Types
+### Whitelisting MIME types
 
-In most cases you might not want the server to accept every file that is uploaded.
+In most cases, you might not want the server to accept every file that is uploaded.
 
-To restrict the kind of files that can be uploaded edit the `mimeTypeWhitelist` array in `server.js`.
+To restrict the type of files that can be uploaded, edit the `mimeTypeWhitelist` array in `server.js`.
 
 ```
 // only allow jpg and png images to be uploaded 
 mimeTypeWhitelist = ["image/jpeg", "image/png"];
 ```
-You can find a list of mime types at [Apache mime.types](http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types).
+You can find a list of possible mime types at [Apache mime.types](http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types).
+
 
 ## Contributing
 
