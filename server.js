@@ -51,12 +51,12 @@ http.createServer(function(req, res) {
    // GET request
    // serve the requested file if it exists
    //
-   function serveFile(filename) {
+   function serveFile(req, res) {
       var uri = url.parse(req.url).pathname
         , filename = path.join(process.cwd(), uri);
   
-      // file is directory
-      if (fs.statSync(filename).isDirectory()) filename += 'index.html';
+      // root page
+      if (uri == '/') filename += 'index.html';
 
       fs.exists(filename, function(exists) {
 
@@ -66,6 +66,9 @@ http.createServer(function(req, res) {
             res.end('404 Not Found\n' + filename + ' does not exist.');
             return;
          }
+
+         // file is directory
+         if (fs.statSync(filename).isDirectory()) filename += 'index.html';
 
          // serve file
          fs.readFile(filename, 'binary', function(err, file) {
@@ -91,7 +94,7 @@ http.createServer(function(req, res) {
    // POST request
    // save the given files to disk
    //
-   function saveFile() {
+   function saveFile(req, res) {
       res.writeHead(200, {'Content-Type': 'application/json'});
 
       // JSON return object
