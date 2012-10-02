@@ -37,14 +37,15 @@ $ curl -F 'upload=@img.png' http://localhost:8888
   "numberOfFiles": 1,
   "files": [
     {
-      "path": "/Users/alexanderschuch/Desktop/UpNode/uploads/img.png",
-      "uploadsPath": "/Users/alexanderschuch/Desktop/UpNode/uploads/",
+      "path": "/path/to/UpNode/uploads/img.png",
+      "uploadsPath": "/path/to/UpNode/uploads/",
       "filename": "img.png",
-      "size": 229258,
-      "lastModifiedDate": "2012-09-28T15:22:05.731Z",
+      "size": 1036163,
+      "lastModifiedDate": "2012-10-02T10:02:53.460Z",
       "mimeType": "image/png"
     }
-  ]
+  ],
+  "fields": {}
 }
 ```
 
@@ -52,6 +53,13 @@ You may upload multiple files by providing additional files within the request.
 
 ```
 $ curl -F 'upload[]=@img.png' -F 'upload[]=@anotherimg.png' http://localhost:8888
+```
+
+You can assign additional parameters to the upload as well (e.g. a user to associate to the upload).
+These params will be shown in the fields object of the server response.
+
+```
+$ curl -F 'upload=@img.png' -F 'user=123456789' http://localhost:8888
 ```
 
 ### Serving files

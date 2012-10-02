@@ -147,7 +147,7 @@ http.createServer(function(req, res) {
 
          // fields, other query params
          .on('field', function(name, value) {
-            fields.name = value;
+            fields[name] = value;
          }) 
 
          // error
