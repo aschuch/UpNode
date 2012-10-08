@@ -5,7 +5,7 @@
   "description": "",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nodejitsu/http-server.git"
+    "url": "https://github.com/aschuch/UpNode.git"
   },
   "keywords": [
     "rest",
